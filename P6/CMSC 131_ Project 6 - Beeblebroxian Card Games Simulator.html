@@ -1,0 +1,533 @@
+
+<!-- saved from url=(0076)https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/project6.html -->
+<html class=""><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CMSC 131: Project 6 - Beeblebroxian Card Games Simulator</title>
+<link type="text/css" rel="stylesheet" charset="UTF-8" href="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/translateelement.css"></head>
+ 
+<body>
+<button type="button" class="btn btn-default" onclick="{location.href='../index.html'}">返回</button>
+<font size="6">
+<font size="6">
+<center><b>CMSC 131 - Fall 2016 - Project #6</b></center>
+</font>
+<br>
+<font size="4">
+Please note that there are two elements to this project; the deck of cards
+and the evaluation of hands of cards.  They are related to each other in
+theme and in terms of practice with data structures and with logic and would
+both be needed to implement a full Beeblebroxian Card Games Simulator.
+However, the two elements do not interact in the JUnit tests, so if you get
+stuck on something in one element of the project, you can switch to working
+on the other until you have a chance to come in to office hours.
+<br><br>
+There is a <b>Launcher.java</b> class that will bring up a visualization of the 
+deck with which you can interact to visually test building the deck, as 
+well as cutting the deck, dealing from the deck, and shuffling the deck.
+The hand evaluators all need to be tested via JUnit tests for your own
+testing and debugging needs.
+<br><br>
+Suggested target for (a) building the deck, being able to get cards from it, and
+the number of cards, and (b) evaluating Beeblejack hands
+is before end of office hours Friday, November 11th.
+<br><br>
+Suggested target for 
+evaluting hasPair, hasThreeOfAKind, hasFourOfAKind, hasFiveOfAKind
+is by end of Sunday, November 13th.
+<br><br>
+Suggested target for all non-challenge elements is before end of office hours 
+Friday, November 17th.
+<br><br>
+Graded: assignment submission due on Submit Server before 8pm on Monday, November 21st. 
+
+<br><br> 
+Type of project: 
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/OpenClosedPolicy.shtml">Closed</a>
+</font> 
+ 
+<hr>
+
+<p align="center"><font size="6"><b>Beeblebroxian Card Games Simulator</b></font></p>
+<p align="center"><img src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/splash.png"></p>
+<h2 align="left"><u>Overview</u></h2>
+<p align="left">
+In this project, you will utilize both 
+Java's ArrayList<type> class
+and
+Java arrays.
+The goal is to understand both and be able to consider the advantages
+and disadvantages of each so that in future courses, you can make
+educated decisions.  It is critical that you use the storage approach
+we mandate in this project.  For example, if we tell you to use an
+ArrayList for something (such as the Deck) and you use an array instead, 
+all points associated with that will be deducted, even if it "passes" on the
+submit server.
+</type></p>
+<p>
+This project will have you designing and implementing several related
+classes; a deck of cards and some game evaluation methods.
+The deck and games bear some similarities to a standard deck of cards
+and the games of Poker and Blackkjack but there are differences; these
+are for the Beeblebroxian Casino, soon to open on Mars.
+<b>You don't (and unless you hail from the vicinity of Betelgeuse, can't) 
+have previous experience with this deck and these games.</b>
+We'll explain everything!
+As always, you will have starter files provide and this document will
+specify the specifications for the methods.
+There is a GUI provided to allow you to "see" the deck to provide some
+help in debugging errors related to the deck, but JUnit testing will be 
+your friend for much of this project!
+</p>
+<p>
+You will design and implement one Java data structure class
+(the <b>Deck</b> which represents a deck of cards) using an 
+<b>ArrayList&lt;Card&gt;</b> to store and manipulate the contents of the deck
+as well as 
+<b>HandEvaluatorBBXP</b>, which contains several static methods that 
+evaluate the contents of arrays of 5 cards to determine which 
+"Beeblebroxian Poker" hand(s) are represented
+and
+<b>HandEvaluatorBeeblejack</b>, which contains two static methods 
+that evaluate the contents of ArrayList objects
+connected to the game of Beeblejack.
+as well as a series of <b>JUnit tests</b> in another class.
+
+</p><h2 align="left">&nbsp;</h2>
+<h2 align="left"><u>Cards</u></h2>
+<p align="left">If you are not familiar with the Beeblebroxian deck of 45 playing 
+cards (which you aren't) and the terminology that goes along with it 
+("suit", "Ace", "clubs", etc.), then you'll need to 
+take a look at the 
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/playingCard.html" target="_blank">Playing Card Page</a>.</p>
+<br>
+<h3 align="left"><u><font size="5">Card Class (Provided)</font></u></h3>
+<p align="left">Before you get started, you should read the
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/doc/index.html" target="_blank">JavaDoc for the Card class.</a>&nbsp; 
+You will use this class while writing your classes.</p>
+<h3 align="left">&nbsp;</h3>
+
+<h3 align="left"><u><font size="5">Deck.java</font></u></h3>
+<blockquote>
+	<p align="left">
+        The Deck class represents a deck of cards.&nbsp; It starts 
+	off with 45 cards, but as cards are dealt from the deck, the number of cards 
+	(and the ArrayList&lt;Card&gt; that holds them) becomes smaller. 
+        </p>
+	<p align="left">The class has one private instance variable that stores the 
+	ArrayList&lt;Card&gt; of references to Cards that are currently in the Deck:
+        You <b>must</b> use the ArrayList for this class.  You may <b>not</b> add 
+        any arrays to this class except one place; the array that <b>deal</b> returns.
+        </p>
+	<blockquote>
+		<p align="left"><font face="Courier New"> private ArrayList&lt;Card&gt; cards;</font></p>
+		<p align="left"><font color="#FF0000"><b>Important Note:&nbsp; The <i>first
+	</i>Card in the ArrayList will be considered the card that is at the <i>top</i> 
+	of the deck.</b>
+        When cards are removed from the deck they will be 
+	removed from the <i>front</i> of the ArrayList.</font></p>
+	</blockquote>
+	<p align="left"><b>You must implement the following methods for the Deck class:</b></p>
+	<ul>
+		<li>
+		<p align="left"><font face="Courier New">public Deck() -- </font>
+		<font face="Times New Roman">This constructor initializes the Deck with 
+		references to 45 card objects, representing the 45 cards that are in a 
+                standard Beeblebroxian deck.&nbsp; 
+		The cards must be ordered as in the diagram below:</font></p></li>
+</ul>
+<blockquote>
+	<p align="left">
+	<img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/initial45.jpg" width="838" height="98"></p>
+	<p align="left"><b>Important:&nbsp; The FIRST card in your ArrayList&lt;Card&gt; 
+        must be the Ace of Spades, and the LAST card should be the Nine of Bebels.
+	Note that in the picture above, the Ace of Spades is at the TOP of the deck, 
+	which is to the left.</b></p>
+	<p align="left">&nbsp;</p>
+</blockquote>
+<ul>
+	<li>
+	<p align="left"><font face="Courier New">public Deck(Deck other) -- </font>
+	<font face="Times New Roman">Standard copy constructor.&nbsp; Note that it 
+	is okay to make a shallow copy of the ArrayList&lt;Card&gt; of cards.
+        (The Card class objects are immutable, so aliasing Card objects is not a problem.)
+        </font></p></li>
+</ul>
+<p align="left">&nbsp;</p>
+<ul>
+	<li>
+	<p align="left"><font face="Courier New">public Card getCardAt(int position) 
+	-- </font><font face="Times New Roman">Returns a reference to the card that 
+        is at the specified position in the ArrayList&lt;Card&gt;.
+        (Uses the usual 0-based indexing.) 
+        For this project you can assume only legal requests will be made.</font></p></li>
+</ul>
+<p align="left">&nbsp;</p>
+<ul>
+	<li>
+	<p align="left"><font face="Courier New">public int getNumCards() -- </font>
+	<font face="Times New Roman">Returns the size of the ArrayList&lt;Card&gt; of 
+        Card references.
+	(It starts off equal to 45, but becomes smaller as cards are dealt from the 
+	deck.)</font></p></li>
+</ul>
+<p align="left">&nbsp;</p>
+<ul>
+	<li>
+	<p align="left"><font face="Courier New">public void cut(int position)--
+	</font><font face="Times New Roman">This method divides the deck into two 
+	logical subpackets:
+             The part <i>above</i> the specified position, and 
+             the part that is at the specified position or below.
+
+        The two subpackets are reversed (the top packet is placed on the bottom 
+        and the bottom packet is placed on the top.)
+
+        The position value uses 0-based indexing as usual, so the card at the top 
+        of the deck (to the left in the diagrams) is at position 0.  Think about how
+        you can take advantage of the ArrayList object's ability to add and remove
+        individual cards to/from specific positions.  While we will not be having
+        a drawing/pseudocode element to this assignment, there are several places 
+        (like here) where drawing out a picture of a deck with (for example) only
+        8 or 9 cards and tracing on that before you start writing code will
+        be very useful.
+
+        Here is an example of a deck being cut:</font></p></li>
+</ul>
+<blockquote>
+	<blockquote>
+		<p align="left"><b><font face="Times New Roman">Before cut</font></b></p>
+		<p align="left">
+		<img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/initial45.jpg"></p>
+		<p align="left"><font face="Times New Roman"><b>After cutting at 
+		position 4.</b>&nbsp; (The 5 of spades was at position 4 in the diagram 
+		above.)</font></p>
+		<p align="left"><img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/cut45.jpg"></p>
+		<p align="left">&nbsp;</p>
+	</blockquote>
+</blockquote>
+
+
+<ul>
+	<li>
+	<p align="left"><font face="Courier New">public Card[] deal(int numCards)--
+	</font><font face="Times New Roman">This method will remove the specified 
+	number of cards from the top of the deck and return them as an array.
+	For example, if the parameter is 4, then the first four cards in the deck 
+	will be returned as an array of size 4.  This is the <b>one</b> place in 
+        this class where an array is used.
+        Important:<b> The cards will be removed from the front of the "cards" 
+        ArrayList, not the back.</b>  As with the <b>cut</b> method, drawing some 
+        pictures and thinking about the add/remove options the ArrayList object
+        provides will help make this a smoother section of code to design and implement.
+        For this project you can assume only legal requests will be made.
+	</font></p>
+        </li>
+</ul>
+
+
+
+
+<ul>
+        <li>
+        <p align="left">CHALLENGE UTILITY: 
+        <font face="Courier New">public void shuffle() -- </font>
+        <font face="Times New Roman">This method will re-arrange the cards that are 
+        in the deck.&nbsp; The idea is that the deck will be divided into two 
+        "packets" -- the top half and the bottom half.&nbsp; The new array of cards 
+        will consist of:&nbsp; the first card from the top packet, followed by the 
+        first card from the bottom packet, followed by the second card from the top 
+        packet, followed by the second card from the bottom packet, etc.<b>&nbsp; 
+        Important:&nbsp; If there are an odd number of cards, the top packet should 
+        have one more card than the bottom packet.&nbsp; </b>Remember that the top 
+        of the deck is considered to be the <i>front</i> of the array.<b>&nbsp; </b>
+        <font color="#FF0000">In the pictures below, remember that the top of the 
+        deck appears at the left side.</font></font></p></li>
+</ul>
+<blockquote>
+        <p align="left"><font face="Times New Roman">Below&nbsp; are two examples of 
+        how the shuffle should work:</font></p>
+        <p align="left"><b><font face="Times New Roman">Example 1 (even number of 
+        cards):</font></b></p>
+        <blockquote>
+                <p align="left"><b><font face="Times New Roman">Before Shuffling</font></b></p>
+                <p align="left">
+                <img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/EvenBefore.png"></p>
+                <p align="left"><b><font face="Times New Roman">After Shuffling</font></b></p>
+                <p align="left">
+                <img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/EvenAfter.png"></p>
+        </blockquote>
+        <p align="left">&nbsp;</p>
+        <p align="left"><b><font face="Times New Roman">Example 2 (odd number of 
+        cards):</font></b></p>
+        <blockquote>
+                <p align="left"><b><font face="Times New Roman">Before Shuffling</font></b></p>
+                <p align="left">
+                <img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/OddBefore.png"></p>
+                <p align="left"><b><font face="Times New Roman">After Shuffling</font></b></p>
+                <p align="left">
+                <img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/OddAfter.png"></p>
+                <p align="left">&nbsp;</p>
+        </blockquote>
+</blockquote>
+
+</blockquote>
+
+
+
+
+<h2 align="left"><u>Beeblejack Rules</u></h2>
+<p align="left">Read the 
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/BeeblejackValues.html" target="_blank">Beeblejack Page</a>.
+To successfully implement the Beeblejack evaluation part of this project you need to 
+know the rules of how values are assigned to these hands very precisely so read this 
+information carefully!</p>
+<h3 align="left"><u><font size="5">HandEvaluatorBeeblejack.java</font></u></h3>
+<p align="left"><font face="Times New Roman">
+This class consists of two static methods that you will write.
+The prototypes for the methods are:</font>
+  </p><ul>
+  <li><font face="Courier New">public static int eval(ArrayList&lt;Card&gt; hand)</font></li>
+  <li><font face="Courier New">public static boolean houseWins(ArrayList&lt;Card&gt; player, ArrayList&lt;Card&gt; dealer)</font></li>
+  </ul>
+<p></p>
+
+
+<br>
+<h2 align="left"><u>Beeblebroxian Poker Hands</u></h2>
+<p align="left">Read the <a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/BeeblebroxianPokerHands.html">Beeblebroxian Poker Hand
+Page</a>.
+To successfully implement the Beeblebroxian Poker hand evaluation part of this project 
+you need to know the definitions of these hands very precisely so read this information 
+carefully!</p>
+<p></p>
+
+<h3 align="left"><u><font size="5">HandEvaluatorBBXP.java</font></u></h3>
+<p align="left"><font face="Times New Roman">
+This class consists of several static methods that you will write.
+Each method can assume that the array passed into it has 
+<u>exactly</u> 5 elements.
+The prototypes for the methods (in the order we think you should work on them) are:</font>
+</p><ul>
+<li><font face="Courier New">public static boolean hasPair(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasThreeOfAKind(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasFourOfAKind(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasFiveOfAKind(Card[] cards)</font></li>
+<br>
+<li><font face="Courier New">public static boolean hasRainbow(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasStraight(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasFlush(Card[] cards)</font></li>
+<br>
+<li><font face="Courier New">public static boolean hasStraightRainbow(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasStraightFlush(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasTwoPair(Card[] cards)</font></li>
+<br>
+<li>CHALLENGE HAND: <font face="Courier New">public static boolean hasFullHouse(Card[] cards)</font></li>
+</ul>
+<p align="left"><font face="Times New Roman">The parameter for each of these 
+methods will be an array of <u>exactly</u> 5 cards.&nbsp; Each method will return true 
+or false, based on whether or not the given set of cards satisfies the poker 
+hand being evaluated in the method.&nbsp;&nbsp; For example, the hasTwoPair method 
+will return true if the set of cards has two pairs of different values (e.g. a 
+pair of 4's and a pair of Nine).&nbsp; If you need to review the various "poker 
+hands" being tested in the methods, please take another look at the</font> 
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/BeeblebroxianPokerHands.html">Beeblebroxian Poker Hand Page</a>.</p>
+<p align="left"><font face="Times New Roman"><font color="#FF0000"><b>Important:&nbsp;
+</b>Each of these methods checks whether or not the set of cards satisfies the 
+given poker hand, but it does not care if it could also satisfy a <i>better </i>
+hand.</font>&nbsp; For example, if the current hand is </font></p>
+<blockquote>
+	<p align="left"><font face="Courier New">&lt;Ace of diamonds, Ace of spades, 
+	Ace of hearts, Nine of Spades, Nine of Diamonds&gt;</font><font face="Times New Roman">
+	</font></p>
+	<p align="left"><font face="Times New Roman">then the results of calling 
+	each method should be as indicated below:</font></p>
+<ul>
+<li>
+<p align="left"><font face="Times New Roman">hasPair -- true&nbsp; 
+(there is at least one pair)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasRainbow -- false&nbsp; 
+</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasTwoPair -- true (there are 
+two pairs of distinct values)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasThreeOfAKind -- true (there are 
+three Aces)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraight -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFlush -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFullHouse -- true (there are 
+three Aces and two Nine -- that makes a "full house")</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFourOfAKind -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraightRainbow -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraightFlush -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFiveOfAKind -- false</font></p></li>
+</ul>
+</blockquote>
+	<p align="left"><font color="#FF0000"><b>Important:</b>&nbsp; In order for a 
+	hand to qualify as "Two Pair", it must have two pairs of <i>distinct</i> 
+	values -- in particular, <i>having four-of-a-kind or five-of-a-kind<u>
+        do not</u></i> also count as 
+	two pair.&nbsp; </font>For example, if the current hand is</p>
+	<blockquote>
+		<p align="left"><font face="Courier New">
+                &lt;2 of diamonds, 
+                    2 of bebels,  
+                    2 of hearts, 2 of clubs, 
+                    9 of spades&gt;</font></p>
+		<p align="left"><font face="Times New Roman">then the results of calling 
+		each method should be as indicated below:</font></p>
+<ul>
+<li>
+<p align="left"><font face="Times New Roman">hasPair -- true&nbsp; 
+(there is at least one pair)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasRainbow -- true&nbsp; 
+(each suit is represented)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman" color="#FF0000">hasTwoPair -- 
+false (there are <i>not </i>two pairs of distinct values)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasThreeOfAKind -- true (there are 
+three 2's)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraight -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFlush -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFullHouse -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFourOfAKind -- true (there are 
+four 2's)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraightRainbow -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraightFlush -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFiveOfAKind -- false</font></p></li>
+</ul>
+		<p align="left">&nbsp;</p>
+	</blockquote>
+
+<p align="left"><u><b><font size="5">JUnit Tests</font></b></u></p>
+<p align="left">
+You are required to submit JUnit tests for all of the methods in 
+the HandEvaluatorBBXP class and at least three <b>eval</b> scenarios
+for the HandEvaluatorBeeblejack class.
+Your tests should be as thorough as possible.
+Be sure that for each HandEvaluatorBBXP method you have written some 
+tests where the method returns "true", and some tests where 
+the method returns "false".</p>
+<p>
+10% of your grade on this project will be determined by the thoroughness of 
+the tests you write.
+Please note that in order to get any credit for a JUnit test, 
+your project must <i>pass</i> the test AND it must be a proper test of
+what we have requested.
+You will place your JUnit test methods into the file provided called 
+"StudentTests.java" in the <b>p6Testing</b> package.
+If the tests are not located in this file in this package, you will not 
+get credit for them.</p>
+<p>&nbsp;</p>
+<p><u><font size="5"><b>Requirements</b></font></u></p>
+<ul>
+	<li>As with all programming assignments: 
+	<ul>
+		<li>You must use meaningful variable names and good indentation.</li>
+		<li>You must avoid code duplication, by calling appropriate methods 
+		(rather than cutting and pasting code). You may define your own private 
+		utility methods to perform often repeated tasks.</li>
+		<li>Because we are using an automatic testing system, it is important 
+		the you adhere closely to the specifications. </li>
+	</ul>
+	</li>
+
+        <li>There are some <font color="red"><b><u>vital</u></b></font> rules with this project.
+            If you violate these, points for tests passed on the submit server
+            will be deducted for tests connected with the classes below.
+        <ul>
+<li>In the <b>Deck</b> class
+    you may not use arrays other than for the return value of <b>deal</b>.
+    Everything else about the deck has to use the ArrayList&lt;Card&gt;.
+    </li>
+<li>In the <b>HandEvaluatorBeeblejack</b> class
+    you may not use arrays at all.  You have to do everything using the ArrayList.
+    </li>
+<li>In the <b>HandEvaluatorBBXP</b> class, you may not use any of the Java collections classes 
+(including ArrayList, LinkedList, etc.)</li>
+<li>You may use arrays in the <b>HandEvaluatorBBXP</b> (in fact you have to) but 
+    you may not use Java abilities like the sorting methods 
+    provided for arrays.  You may not use any features of classes like Collections 
+    or Arrays or System and you may not write a method to sort arrays for you.</li>
+</ul>
+</li><li>Please remember that we will not be using any of the new features that
+    Java 8 introduced and that in this course you are not allowed to try to
+    use any new features that you might read about elsewhere when doing your
+    assignments.</li>
+
+</ul>
+ 
+<br>
+ 
+<p><b><u><font size="5">Project Submission</font></u></b></p>
+<p>Submit your project from Eclipse by right-clicking the project folder and
+selecting "submit project".&nbsp; You may submit as many times as you
+want -- we only grade the submission that scores the highest on the
+automated tests.&nbsp; After you have submitted your project, you should visit
+the <a href="http://submit.cs.umd.edu/">submit server</a>.&nbsp; There you can obtain
+limited feedback about how well your project is performing.&nbsp; The number of
+times you can run our tests on your project (before the due date) is
+limited.&nbsp; <b>The earlier you begin working on the project, the more
+opportunities you will have to see how your project performs on our tests
+before the due date!</b></p>
+
+
+
+<p>&nbsp;</p>
+<h2 align="left"><u>Running the Deck Simulation</u></h2>
+<p align="left"><b>To run the 
+simulation execute the main method in the Launcher.java class.</b>
+This will allow you to do simple testing of building a deck, cutting
+the deck, and dealing a single card from the deck.  
+You can cut the deck by clicking somewhere in the middle of the deck.
+Deal is accomplished by clicking the button.
+However, this is limited and most testing should be done via JUnit and 
+the submit server.
+</p>
+<p>&nbsp;</p>
+
+
+
+<p><u><font size="5"><b>Grading</b></font></u></p>
+<p>Your grade will be computed as follows:</p>
+<ul>
+<li>Public Tests about Deck:&nbsp; 12%</li>
+<li>Public Tests about Hands:&nbsp; 28%</li>
+<li>Release Tests about Deck:&nbsp; 12%</li>
+<li>Release Tests about Hands:&nbsp; 34%</li>
+<li>SECRET TESTS:&nbsp; 9% 
+    (you will get no feedback regarding these from the submit server)</li> 
+<li>JUnit tests written by you in the file StudentTests.java:&nbsp; 5% 
+    (you will get no grading feedback regarding these from the submit server)
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;NOTE: These are meant to help you test your
+code locally, before submitting, to get more practice with that.  Please
+don't let the low number of points on this impact its value.
+</li> 
+	
+</ul>
+with the exception being that if any of the classes violate the rules given above,
+we will go in and remove submit server points connected to any class that was not
+written according to the restrictions stated about things like arrays and ArrayLists.
+
+<br> <br> <br> <br><div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/translate_24dp.png" width="20" height="20"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">&#21407;&#25991;</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">&#25552;&#20379;&#26356;&#22909;&#30340;&#32763;&#35793;&#24314;&#35758;</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div>
+
+
+</body></html>

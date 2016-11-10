@@ -1,0 +1,456 @@
+
+<!-- saved from url=(0076)https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/project6.html -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html class=""><head>
+
+<title>CMSC 131: Project 6 - Beeblebroxian Card Games Simulator</title>
+<link type="text/css" rel="stylesheet" charset="UTF-8" href="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/translateelement.css">
+<body>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+<button type="button" class="btn btn-default" onclick="{location.href='../index.html'}">返回</button>
+<font size="6">
+<center><b>CMSC 131 - Fall 2016 - Project #6</b></center>
+</font>
+<br>
+<font size="4">
+请注意，这个项目有两个任务：卡牌组
+和计算手牌的值。这两者在
+主题以及数据结构和逻辑的实践上有一定的联系，
+两者都需要实现一个完整的Beeblebroxian卡牌游戏模拟器。
+但是，这两个元素在JUnit测试中不交互，所以如果你卡在其中一个上，你可以切换到另一个继续编写，这样你可能有机会去office hour问问题。
+<br> <br>
+有一个<b> Launcher.java </b>类，将显示一个可视化
+卡牌组，你可以与之交互并更直观的测试卡牌组的结果，例如进行切牌，出牌和洗牌。
+手牌的测试都需要你自己通过 JUnit test 编写测试来满足你自己的调试需求。
+<br> <br>
+建议（a）建造卡牌组，能够从中获得卡，和
+卡的数量，和（b）计算Beeblejack手牌值
+在11月11日星期五的office hour之前完成。
+<br> <br>
+建议
+evaluting hasPair，hasThreeOfAKind，hasFourOfAKind，hasFiveOfAKind
+在11月13日星期日之前结束。
+<br> <br>
+所有非挑战元素的建议在11月17日星期五的office hour前完成
+。
+<br> <br>
+评分：在11月21日星期一晚上8点前，于提交服务器提交作业。
+
+<br><br> 
+Project类型: 
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/OpenClosedPolicy.shtml">独立完成</a>
+</font> 
+ 
+<hr>
+
+<p align="center"><font size="6"><b>Beeblebroxian Card Games Simulator</b></font></p>
+<p align="center"><img src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/splash.png"></p>
+<h2 align="left"><u>Overview</u></h2>
+<p align="left">
+在这个项目中，你将利用两者
+Java的ArrayList <type>类
+和
+Java数组。
+目标是了解两者，并能够考虑他们的优缺点。将来的课程，你可以明确的做出对二者的选择
+决策。使用我们要求的储存方法是本次project的关键。例如，如果我们告诉你使用
+ArrayList的东西（如Deck）然后你使用了数组，
+所有与之关联的分数都将被扣除，即使它"通过"了
+提交服务器。
+</type> </p>
+<p>
+这个项目将让你设计和实现几个相关的
+类：卡牌和一些游戏评估方法。
+卡牌和游戏有一些类似于标准扑克的卡
+和扑克和Blackkjack的游戏，但有差异;这些
+是为Beeblebroxian赌场设计的，很快在火星上开放。
+<b>你不会（除非你从Betelgeuse附近来，你不能）
+有此套牌和这些游戏的经验。</b>
+我们会解释一切！
+一如往常，我们提供了启动文件和本文档
+来说明每个方法的要求。
+有一个GUI提供允许你"看到"整副牌，这会在调试错误时提供一些
+帮助，但JUnit test将在这个project中成为你的朋友！
+</ p>
+<p>
+你将设计和实现一个Java数据结构类
+（<b> Deck </b>代表一副牌）
+<b> ArrayList&lt;Card&gt; </b>来存储和操纵牌组的内容
+以及
+<b> HandEvaluatorBBXP </b>，其中包含几个静态方法
+计算5张卡的数组的内容以确定哪些
+"Beeblebroxian Poker"牌组
+和
+<b> HandEvaluatorBeeblejack </b>，其中包含两个
+评估连接到Beeblejack的ArrayList对象的内容的静态方法
+。
+以及在另一个类中的一系列<b> JUnit test</b>。</p> <h2 align ="left">&nbsp; </h2>
+<h2 align ="left"> <u>卡</u> </h2>
+<p align ="left">如果你不熟悉Beeblebroxian 45人的套牌
+卡（你不会熟悉的）和随之而来的术语
+（"Suit"，"Ace"，"clubs"等），那么你就需要
+看看下面的东西
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/playingCard.html" target="_blank">扑克牌页</a>。</p >
+<br>
+<h3 align ="left"> <u> <font size ="5">Card class（已经提供）</font> </u> </h3>
+<p align ="left">在开始之前，你应该阅读
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/doc/index.html" target="_blank">Card类的JavaDoc。</a >&nbsp;
+你将在写别的class时会使用此class。</p>
+<h3 align ="left">&nbsp; </h3>
+
+<h3 align ="left"> <u> <font size ="5"> Deck.java </font> </u> </h3>
+<blockquote>
+<p align ="left">
+Deck类代表一副牌。开始
+时有45张，但发牌时，卡的数量
+（和存储它们的ArrayList&lt; Card&gt;）会变小。
+</p>
+<p align ="left">该类有一个私有实例变量来存储
+ArrayList&lt;Card&gt;对当前在卡组中的卡的引用：你<b>必须</b>使用此类的ArrayList。你<b>不</b>可以添加任何数组; 在<b>deal</b>返回的数组是唯一的例外。
+        </p>
+<blockquote>
+<p align ="left"> <font face ="Courier New"> private ArrayList&lt;Card&gt;cards; </font> </p>
+<p align ="left"> <font color ="#FF0000"> <b>重要注意事项：&nbsp; ArrayList中的 <i>第一张
+</i>牌将被视为位于<i>顶部</i>的牌
+。</b>当卡从牌组上移除时，他们将从ArrayList的<i>前端</i>开始移除。</font> </p>
+</blockquote>
+<p align ="left"> <b>你必须为Deck类实现以下方法：</b> </p>
+<ul>
+<li>
+<p align ="left"> <font face ="Courier New"> public Deck() - </font>
+<font face ="Times New Roman">此构造函数初始化Deck时
+传入45个Card对象，代表着一副标准Beeblebroxian牌的45张牌。
+卡片必须按照下图进行排序：</font> </p> </li>
+</ul>
+<blockquote>
+<p align ="left">
+<img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/initial45.jpg" width="838" height="98"></p>
+<p align ="left"> <b>重要提示： ArrayList&lt;Card&gt;中的第一张牌必须是黑桃A，而最后的牌应该是Bebels 9。
+请注意，在上图中，黑桃A是在一副牌的顶部。
+</b> </p>
+<p align ="left">&nbsp;</p>
+</blockquote>
+<ul>
+<li>
+<p align ="left"> <font face ="Courier New"> public Deck(Deck other) - </font>
+<font face ="Times New Roman">标准复制构造函数。注意它
+做ArrayList&lt; Card&gt;的Shallow Copy是可以的。（Card类对象是不可变的，所以重复赋值对象不是问题。）
+        </font> </p> </li>
+</ul>
+<p align ="left">&nbsp; </p>
+<ul>
+<li>
+<p align ="left"> <font face ="Courier New"> public Card getCardAt(int position)
+- </font> <font face ="Times New Roman">返回对Card位于ArrayList&lt; Card&gt;中的指定位置。（使用跟其他一样的从0索引。）对于此项目，你可以假设只会提出正常要求。</font> </p> </li>
+</ul>
+<p align ="left">&nbsp; </p>
+<ul>
+<li>
+<p align ="left"> <font face ="Courier New"> public int getNumCards() - </font>
+<font face ="Times New Roman">返回存储牌的ArrayList&lt; Card&gt;的大小。
+（它一开始等于45，但会变得更小，因为卡被发出去了）</font> </p> </li>
+</ul>
+<p align ="left">&nbsp; </p>
+<ul>
+<li>
+<p align ="left"> <font face ="Courier New"> public void cut(int position) - 
+</font> <font face ="Times New Roman">此方法将卡组分为两部分：<i>指定位置上方的</i>部分，和位于指定位置或以下的部分。两个子分组交换位置（顶部分组被放置在底部，底部的放置在顶部。）
+位置值照常使用基于0的索引，所以顶部的卡（在图中的左侧）在位置0.想想如何
+利用ArrayList对象的添加和删除功能把移动
+个别卡到特定位置。虽然我们不会有
+一个评分的绘图/伪代码作业，有几个地方
+（像这里）画出一个8或9张牌的逻辑图会很有帮助。
+
+以下是切牌的示例：</font> </p> </li>
+</ul>
+<blockquote>
+<blockquote>
+<p align ="left"> <b> <font face ="Times New Roman">切牌前</font> </b> </p>
+<p align ="left">
+<img border ="0"src ="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/initial45.jpg"> </p>
+<p align ="left"> <font face ="Times New Roman"> <b>在位置4切牌后。</b>&nbsp; (黑桃5初始时在图中的位置4)</font> </p>
+<p align ="left"> <img border ="0"src ="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/cut45.jpg"> </p>
+<p align ="left">&nbsp; </p>
+</blockquote>
+</blockquote>
+
+
+<ul>
+<li>
+<p align ="left"> <font face ="Courier New"> public Card [] deal(int numCards)- 
+</ font> <font face ="Times New Roman">此方法将
+从卡片顶部删除指定的卡数，并将它们作为数组返回。
+例如，如果参数是4，那么在牌组中的前四张牌
+将作为大小为4的数组返回。这是<b>唯一一个</b>在这个类中使用数组的地方。
+重要：<b>卡会从"cards" ArrayList的前面移除，
+而不是后面。</b>与<b>切牌</b>方法一样，绘制一些
+ 图片和思考关于ArrayList对象的添加/删除功能将使这个代码段设计和实现更平滑。对于这个项目，你可以假设只会提出正常要求。
+</font></p></li></ul>
+<ul>
+        <li>
+        <p align="left">挑战任务: 
+        <font face="Courier New">public void shuffle() -- </font>
+        <font face="Times New Roman">这种方法将重新安排整幅牌的顺序。这个想法是将甲板分为两部分  - 上半“包”和下半“包”。 新的卡牌顺序将包括：从上半包中抽取第一张牌，然后是下半包的第一张牌，随后是上半包中的第二张牌，之后是下半包中的第二张牌等。<b>&nbsp; 重要： 如果有奇数张牌，则上半包应该比下半包多一张牌。 </b>记住顶部是该Array的<i>前面（从小数开始）</i>。<b>&nbsp;</b> <font color ="#FF0000">在下面的图片中，记住左侧是一副牌的最上面。</font></font></p></li>
+</ul>
+<blockquote>
+        <p align="left"><font face="Times New Roman">下面是两个示例图</font></p>
+        <p align="left"><b><font face="Times New Roman">Example 1 (偶数张牌):</font></b></p>
+        <blockquote>
+                <p align="left"><b><font face="Times New Roman">Before Shuffling</font></b></p>
+                <p align="left">
+                <img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/EvenBefore.png"></p>
+                <p align="left"><b><font face="Times New Roman">After Shuffling</font></b></p>
+                <p align="left">
+                <img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/EvenAfter.png"></p>
+        </blockquote>
+        <p align="left">&nbsp;</p>
+        <p align="left"><b><font face="Times New Roman">Example 2 (奇数张牌):</font></b></p>
+        <blockquote>
+                <p align="left"><b><font face="Times New Roman">Before Shuffling整容前</font></b></p>
+                <p align="left">
+                <img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/OddBefore.png"></p>
+                <p align="left"><b><font face="Times New Roman">After Shuffling整容后</font></b></p>
+                <p align="left">
+                <img border="0" src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/OddAfter.png"></p>
+                <p align="left">&nbsp;</p>
+        </blockquote>
+</blockquote>
+
+</blockquote>
+
+
+
+
+<h2 align="left"><u>Beeblejack规则</u></h2>
+<p align="left">请阅读 
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/BeeblejackValues.html" target="_blank">Beeblejack Page</a>.
+要完成这个项目的Beeblejack分值部分，你需要精确地知道卡牌是如何得分的，所以仔细阅读这个信息！</p>
+<h3 align="left"><u><font size="5">HandEvaluatorBeeblejack.java</font></u></h3>
+<p align="left"><font face="Times New Roman">
+这个Class包含了两个你需要完成的静态方法
+他们的雏形是:</font>
+  </p><ul>
+  <li><font face="Courier New">public static int eval(ArrayList&lt;Card&gt; hand)</font></li>
+  <li><font face="Courier New">public static boolean houseWins(ArrayList&lt;Card&gt; player, ArrayList&lt;Card&gt; dealer)</font></li>
+  </ul>
+<p></p>
+
+
+<br>
+<h2 align="left"><u>Beeblebroxian 手牌</u></h2>
+<p align="left">请阅读 <a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/BeeblebroxianPokerHands.html">Beeblebroxian Poker Hand
+Page</a>.
+要完成这个项目的Beeblejack手牌部分，你需要精确地知道卡牌是如何得分的，所以仔细阅读这个信息！</p>
+<p></p>
+
+<h3 align="left"><u><font size="5">HandEvaluatorBBXP.java</font></u></h3>
+<p align="left"><font face="Times New Roman">
+这个类包含了一些需要完成的方法。你可以假设每个方法都接受一个包含
+<u>恰好</u>5个元素的数组作为参数。
+以下是推荐完成的顺序:</font>
+</p><ul>
+<li><font face="Courier New">public static boolean hasPair(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasThreeOfAKind(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasFourOfAKind(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasFiveOfAKind(Card[] cards)</font></li>
+<br>
+<li><font face="Courier New">public static boolean hasRainbow(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasStraight(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasFlush(Card[] cards)</font></li>
+<br>
+<li><font face="Courier New">public static boolean hasStraightRainbow(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasStraightFlush(Card[] cards)</font></li>
+<li><font face="Courier New">public static boolean hasTwoPair(Card[] cards)</font></li>
+<br>
+<li>CHALLENGE HAND: <font face="Courier New">public static boolean hasFullHouse(Card[] cards)</font></li>
+</ul>
+<p align="left"><font face="Times New Roman">这些每一个方法的参数将<u>恰好是</u> 5张牌的数组。 每个方法将返回true或false，基于给定牌组是否满足该方法所评判的要求。&nbsp;&nbsp; 例如，如果该组牌具有两对不同的对子，hasTwoPair方法将返回true（例如一对4和一对9）。 如果你需要回顾各种“套牌“的评判标准，请再看一看</font> 
+<a href="https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/BeeblebroxianPokerHands.html">Beeblebroxian Poker Hand Page</a>.</p>
+<p align="left"><font face="Times New Roman"><font color="#FF0000"><b>重要:&nbsp;
+</b>这些方法中的每一个都检查牌组是否满足当前的标准，但它不在乎它是否也可以满足<i>更好</i>的标准。</font>&nbsp; 例如，如果当前的牌是 </font></p>
+<blockquote>
+	<p align="left"><font face="Courier New">&lt;Ace of diamonds, Ace of spades, 
+	Ace of hearts, Nine of Spades, Nine of Diamonds&gt;</font><font face="Times New Roman">
+	</font></p>
+	<p align="left"><font face="Times New Roman">那么每个方法的返回值将是:</font></p>
+<ul>
+<li>
+<p align="left"><font face="Times New Roman">hasPair -- true&nbsp; 
+(there is at least one pair)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasRainbow -- false&nbsp; 
+</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasTwoPair -- true (there are 
+two pairs of distinct values)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasThreeOfAKind -- true (there are 
+three Aces)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraight -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFlush -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFullHouse -- true (there are 
+three Aces and two Nine -- that makes a "full house")</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFourOfAKind -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraightRainbow -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraightFlush -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFiveOfAKind -- false</font></p></li>
+</ul>
+</blockquote>
+	<p align="left"><font color="#FF0000"><b>重要:</b>&nbsp; 如果一组牌满足 "Two Pair", 它必须包含两对 <i>不同</i> 
+	的对子 -- 特别的, <i>一个 four-of-a-kind 或者 five-of-a-kind<u>
+        不会</u></i>算成两对。&nbsp; </font>例如，当前手牌如果是</p>
+	<blockquote>
+		<p align="left"><font face="Courier New">
+                &lt;2 of diamonds, 
+                    2 of bebels,  
+                    2 of hearts, 2 of clubs, 
+                    9 of spades&gt;</font></p>
+		<p align="left"><font face="Times New Roman">那么返回的结果:</font></p>
+<ul>
+<li>
+<p align="left"><font face="Times New Roman">hasPair -- true&nbsp; 
+(there is at least one pair)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasRainbow -- true&nbsp; 
+(each suit is represented)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman" color="#FF0000">hasTwoPair -- 
+false (there are <i>not </i>two pairs of distinct values)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasThreeOfAKind -- true (there are 
+three 2's)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraight -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFlush -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFullHouse -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFourOfAKind -- true (there are 
+four 2's)</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraightRainbow -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasStraightFlush -- false</font></p></li>
+<li>
+<p align="left"><font face="Times New Roman">hasFiveOfAKind -- false</font></p></li>
+</ul>
+		<p align="left">&nbsp;</p>
+	</blockquote>
+
+<p align="left"><u><b><font size="5">JUnit Tests</font></b></u></p>
+<p align="left">
+对于Junit Test,要求提交所有HandEvaluatorBBXP class 和至少三个<b>eval（计算牌值）</b>也就是 HandEvaluatorBeeblejack class的JUnit tests。
+你的测试应该尽量的详尽。
+对于每个HandEvaluatorBBXP类里的方法，返回"true"的和返回"false"的测试都要写。
+</p>
+<p>
+10%的分数会取决于你的测试是否详尽。
+请注意为了使你拿到Junit test的分数，你的project必须<i>通过</i>你自己写的test
+同时这些test是符合我们要求的test。
+你的Junit test要放在<b>p6Testing</b>包的
+"StudentTests.java"里面。
+你的test如果没放在这里面，就不给你分。</p>
+<p>&nbsp;</p>
+<p><u><font size="5"><b>要求：我只翻译了部分</b></font></u></p>
+<ul>
+	<li>As with all programming assignments: 
+	<ul>
+		<li>You must use meaningful variable names and good indentation.</li>
+		<li>You must avoid code duplication, by calling appropriate methods 
+		(rather than cutting and pasting code). You may define your own private 
+		utility methods to perform often repeated tasks.</li>
+		<li>Because we are using an automatic testing system, it is important 
+		the you adhere closely to the specifications. </li>
+	</ul>
+	</li>
+
+        <li>本次有一些<font color="red"><b><u>特别的</u></b></font>规则。
+            如果你违反这些规则，就算你过服务器端测试了我也会把分数扣回来。
+        <ul>
+<li>在 <b>Deck</b> 类中
+    除了<b>deal</b>方法的返回值外，不可以使用array。
+    此类中其他的内容必须使用 ArrayList&lt;Card&gt;.
+    </li>
+<li>在 <b>HandEvaluatorBeeblejack</b> 类中
+    不可以使用array，一切实现都必须要用Arraylist
+    </li>
+<li>在 <b>HandEvaluatorBBXP</b> 类中, 不可以使用 Java collections 类 
+(例如 ArrayList, LinkedList, etc.)</li>
+<li>在 <b>HandEvaluatorBBXP</b> 中可以使用数组 (事实上必须要用) 但是 
+    不可以使用Java.util为数组提供的功能例如排序。 
+    不可以使用 Collections / Arrays / System 的任何功能，也不准写一个排序函数
+    （我tm代码都写完了才看到这个要求）。
+    </li>
+</ul>
+</li><li>Please remember that we will not be using any of the new features that
+    Java 8 introduced and that in this course you are not allowed to try to
+    use any new features that you might read about elsewhere when doing your
+    assignments.</li>
+
+</ul>
+ 
+<br>
+ 
+<p><b><u><font size="5">Project Submission</font></u></b></p>
+<p>Submit your project from Eclipse by right-clicking the project folder and
+selecting "submit project".&nbsp; You may submit as many times as you
+want -- we only grade the submission that scores the highest on the
+automated tests.&nbsp; After you have submitted your project, you should visit
+the <a href="http://submit.cs.umd.edu/">submit server</a>.&nbsp; There you can obtain
+limited feedback about how well your project is performing.&nbsp; The number of
+times you can run our tests on your project (before the due date) is
+limited.&nbsp; <b>The earlier you begin working on the project, the more
+opportunities you will have to see how your project performs on our tests
+before the due date!</b></p>
+
+
+
+<p>&nbsp;</p>
+<h2 align="left"><u>Running the Deck Simulation</u></h2>
+<p align="left"><b>To run the 
+simulation execute the main method in the Launcher.java class.</b>
+This will allow you to do simple testing of building a deck, cutting
+the deck, and dealing a single card from the deck.  
+You can cut the deck by clicking somewhere in the middle of the deck.
+Deal is accomplished by clicking the button.
+However, this is limited and most testing should be done via JUnit and 
+the submit server.
+</p>
+<p>&nbsp;</p>
+
+
+
+<p><u><font size="5"><b>评分标准</b></font></u></p>
+<p>Your grade will be computed as follows:</p>
+<ul>
+<li>Public Tests about Deck:&nbsp; 12%</li>
+<li>Public Tests about Hands:&nbsp; 28%</li>
+<li>Release Tests about Deck:&nbsp; 12%</li>
+<li>Release Tests about Hands:&nbsp; 34%</li>
+<li>神♂秘♂测♂试:&nbsp; 9% 
+    (you will get no feedback regarding these from the submit server)</li> 
+<li>JUnit tests written by you in the file StudentTests.java:&nbsp; 5% 
+    (you will get no grading feedback regarding these from the submit server)
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;NOTE: These are meant to help you test your
+code locally, before submitting, to get more practice with that.  Please
+don't let the low number of points on this impact its value.
+</li> 
+	
+</ul>
+with the exception being that if any of the classes violate the rules given above,
+we will go in and remove submit server points connected to any class that was not
+written according to the restrictions stated about things like arrays and ArrayLists.
+
+<br> <br> <br> <br><div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="./CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator_files/translate_24dp.png" width="20" height="20"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">&#21407;&#25991;</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">&#25552;&#20379;&#26356;&#22909;&#30340;&#32763;&#35793;&#24314;&#35758;</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div>
+
+
+</body></html>
