@@ -1,0 +1,42 @@
+
+<!-- saved from url=(0084)https://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P6/BeeblejackValues.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="en-us">
+
+<title>Beeblejack Hand Values</title>
+</head>
+
+<body>
+
+<h2>手牌分值计算</h2>
+<p>
+本游戏与地球上的Bl	ackjack类似，但是在规则上稍有不同。最终目标还是尽可能的接近21，
+但是有一些小小的区别。
+<br><br>
+程序规格要求
+<b>eval</b> 方法需要评估传进来的手牌的分值，如果超过21就算0分。
+<br><br>
+如果手牌只有两张并且是一张4和一张2（顺序无关），则称为拥有一组BeeBeljack。这算做所有分值中最大的。
+为了满足这个规则，<b>eval</b>方法需要把这种牌组的分值设置成22。这并不是超过了21，只是一种标记值的
+特别的方法。
+<br><br>
+如果手牌只有两张并且是一张6和一张9（顺序无关），则称为拥有一组Questionjack，被标记为21.
+<br><br>
+如果有5，5这张牌可以算为5或者15，取决于当前最优情况。如果一张5被算成15时超过21，即不是最优情况。
+此时就应该被算成5。例如两张5和一张3，此时两张五不能被算为15；两张5一张1，此时一张可以被算为15，
+最后的分值是21。
+<br><br>
+在
+<b>houseWins</b>方法中,赢家是没有超过21且分数较大的一方。
+在本游戏中，Beeblejack是超过使用2张牌以上的21分（也就是这个算王炸，最大）
+a Beeblejack is considered as being higher than a 21 total 
+using more than two cards.
+平局时，算玩家获胜。（庄家->house, 玩家->player)
+<br><br>
+在本游戏中Ace<b>永远</b>算成1。
+</p>
+<p><a href=".／CMSC 131_ Project 6 - Beeblebroxian Card Games Simulator CHN.html">(返回Project说明页面)</a></p>
+
+
+
+</body></html>
