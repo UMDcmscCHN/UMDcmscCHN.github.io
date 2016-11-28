@@ -1,0 +1,177 @@
+
+<!-- saved from url=(0068)http://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P7/p7.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>CMSC 131: Project 7 - PouchCreatures and Battles to the Death</title>
+</head>
+ 
+<body>
+<button type="button" class="btn btn-default" onclick="{location.href='../index.html'}">返回</button>
+<font size="6">
+<center><b>CMSC 131 - Fall 2016 - Project #7</b></center>
+</font>
+<br>
+<font size="5">
+Suggested target for implementing BattleCow and BattleFish and PouchCreature 
+is by the end of office hours on November 28th.
+<br><br>
+Suggested target for the BattleDeck class 
+(other than the two export methods export2Darray and export2Darraylist and the shuffle method)
+is by the end of office hours on November 30th.
+<br><br>
+Suggested target for the export2Darray and export2Darraylist methods is
+by the end of office hours on December 8th.
+<br><br>
+Graded: assignment submission due on Submit Server before 8pm on Monday, December 12th. 
+以上都是废话
+
+<br><br> 
+Type of project: 
+<a href="http://www.cs.umd.edu/class/fall2016/cmsc131-05XX/OpenClosedPolicy.shtml">Closed</a>
+</font> 
+ 
+<hr>
+
+<p><b><font size="5"><u>目标</u></font></b></p>
+
+<p>
+此次project会提供练习interface，通用数据类型，Arraylist，二维数据结构的机会。
+此次project是被分成两阶段完成的：阶段1在第三次考试之前，阶段2在第三次考试以后。
+</p>
+<br>
+<p><b><u><font size="5">Overview</font></u></b></p>
+<p>
+在这次的project中，你需要为一个理论上存在的安卓游戏开发一些元素。
+在阶段1中你需要写很多个用"Battleable"的类（这是一个implement），
+然后创建一个1维的通用数据结构，并且为它写一些方法（例如添加／删除元素）；
+这个数据结构可以保存所有使用"Battleable"的物体，也可以支持一个简单的
+Solitaire游戏。
+在阶段2你需要把这个一维结构扩展，添加一些输出数据的方法。
+<!--
+, and also build a game 
+board that supports a two-dimensional playing space, some basic 
+operations, 
+and a "move and fight" method. 
+-->
+
+</p>
+
+<p align="center">
+<!--img border="0" src="p7.png"-->
+<font size="6"><b>选择你的战争!</b></font>
+</p>
+<p>
+在这次的project情景中，没有GUI（因为另一个team还在写，没写完）
+当他们写完GUI的时候就可以直接调用你的算法了。
+程序设计师为你提供了
+<a href="http://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P7/doc/index.html"><b>JavaDocs</b></a>
+一些简单的test已经写好了(ExampleTests.java)，更多的测试其实
+也写好了（在测试服务器上）。
+</p>
+<br>
+<p><b><u><font size="5">阶段1</font></u></b></p>
+<p>
+</p><ul>
+<li>首先，阅读Universe.java，查看它提供的方法，并记住他们以备后用。
+</li>
+<li>然后，阅读<i>Battleable</i>的文档。
+    在这次的project中至少有3个类会借用这个界面（interface）：
+               PouchCreature, BattleCow, BattleFish.
+</li>
+<li>然后，阅读 BattleCow，BattleFish，PouchCreature三个类，阅读他们的
+    方法描述然后实现这些方法。
+</li>
+<li> 最后，基于方法描述完成BattleDeck类（除了输出方法export2Darray，export2Darraylist
+        和 shuffle)
+    这个类会支持把Battleable objects的deep copy加入到数据结构中。
+    这个数据是一个两端的结构，因为新的物体会以不同的顺序加入到结构的两端中（详情可以看文档）。
+    另外，本类支持两个由游戏开发者要求的方法：
+    让在战斗队列两端的两个Battleable物体开始一场Solitaire战斗（并返回一个胜者）和
+    将队列打乱。
+</li>
+</ul>
+
+
+<br>
+<p><b><u><font size="5">阶段2</font></u></b></p>
+<p>
+</p><ul>
+<li>增加让BattleDeck类将这个结构输出成一个粗糙的二维结构的方法；可以用数组(export2Darray)或者动态数组（arraylist）(export2Darraylist)。
+</li>
+<li>让队列按照游戏设计者意愿的方式洗牌。
+</li>
+<!--
+<li>Implement the BattleBoard methods.   <b>Do we have them do the moving
+and fighting part of the game?</b>
+</li>
+-->
+</ul>
+<p></p>
+<p>&nbsp;</p>
+<b>以下的内容是我从文件的注释里找到的</b>
+<p><u><b>Notes and hints:</b></u></p>
+<ul>
+<li> The weakenCreatures() method might be called apart from within the
+   fight() method.</li>
+<li> The sweepDeck() method might be called apart from within the
+   fight() method.</li>
+<li> For this project you are allowed to (and will need to) add private fields 
+   to some of the classes.</li>
+</ul>
+<b>以上的内容是我从注释里找到的</b>
+<b>一下都是废话</b>
+<br>
+<p><b><u><font size="5">Restrictions</font></u></b></p>
+<ul>
+<li>You are expected to use good style (as always), including commenting, 
+   proper indentation, proper choice of variables names, etc.
+</li>
+<li>While you are free to choose what you feel are the best internal representations
+    for your data, the signatures of the public methods may not be altered.
+</li>
+<li>Please remember that we will not be using any of the new features that
+   Java 8 introduced and that in this course you are not allowed to try to
+   use any new features that you might read about elsewhere when doing your
+   assignments.
+</li>
+</ul>
+
+<br>
+ 
+<p><b><u><font size="5">Project Submission</font></u></b></p>
+<p>
+As always, you will submit your project from Eclipse by right-clicking the 
+project folder and selecting "submit project".
+You may and should, of course, submit as you feel each part is working to 
+get feedback from our tests, and are able to submit as many times as you want 
+for public tests, and have the tokens which will regenerate 24 hours after their 
+use for release tests.  Remember, we only grade the submission that scores the 
+highest on the automated tests
+<br><br>
+<!--
+You should aim for having Phase 1 mostly done and at least lightly tested
+by the evening of Wednesday, November 20th.  Over the weekend you should 
+work to fix any bugs that remain and be able to pass public tests 1 through ?
+and release tests 1 through ?.  You should then read through the Phase 2 
+parts of the description and starter code and plan to start working on that
+by Wednesday, December 7th with the goal being to complete Phase 2 by the
+end of that weekend.
+<br><br>
+-->
+Note that you are strongly encouraged to read the project carefully and test 
+your code with your own JUnit tests first, and there will be secret tests
+that could look for errors the public and release tests might not reveal.
+</p>
+
+
+<p>&nbsp;</p>
+<p><u><font size="5"><b>Grading</b></font></u></p>
+<p>Your grade will be computed as follows:</p>
+<ul>
+<li>Public Tests:&nbsp; 73%</li>
+<li>Release Tests:&nbsp; 27%</li>
+</ul>
+<br><br><br>
+<br><br><br>
+
+
+</body></html>

@@ -1,0 +1,196 @@
+
+<!-- saved from url=(0068)http://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P7/p7.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>CMSC 131: Project 7 - PouchCreatures and Battles to the Death</title>
+</head>
+ 
+<body>
+<font size="6">
+<center><b>CMSC 131 - Fall 2016 - Project #7</b></center>
+</font>
+<br>
+<font size="5">
+Suggested target for implementing BattleCow and BattleFish and PouchCreature 
+is by the end of office hours on November 28th.
+<br><br>
+Suggested target for the BattleDeck class 
+(other than the two export methods export2Darray and export2Darraylist and the shuffle method)
+is by the end of office hours on November 30th.
+<br><br>
+Suggested target for the export2Darray and export2Darraylist methods is
+by the end of office hours on December 8th.
+<br><br>
+Graded: assignment submission due on Submit Server before 8pm on Monday, December 12th. 
+
+<br><br> 
+Type of project: 
+<a href="http://www.cs.umd.edu/class/fall2016/cmsc131-05XX/OpenClosedPolicy.shtml">Closed</a>
+</font> 
+ 
+<hr>
+
+<p><b><font size="5"><u>Objective</u></font></b></p>
+
+<p>
+This project will provide you with the opportunity to practice with 
+interfaces as well as have some more practice with generic data 
+structures, ArrayLists, and two-dimensional structures.  The project
+is meant to be done in two phases; Phase 1 before the 3rd exam and
+Phase 2 after the 3rd exam.
+</p>
+<br>
+<p><b><u><font size="5">Overview</font></u></b></p>
+<p>
+In this project you will implement some elements needed for a theoretical
+Android game being developed.
+In Phase 1 you will build several classes that implement an interface
+called Battleable, 
+and create a new one-dimensional generic data structure with certain 
+rules for adding/removing things; that data structure will be able to
+hold any objects that extend the Battleable interface and will support
+a simple game of Solitaire.
+In Phase 2 you will add to the one-dimensional structure's abilities
+by supporting the exporting of data from it.
+<!--
+, and also build a game 
+board that supports a two-dimensional playing space, some basic 
+operations, 
+and a "move and fight" method. 
+-->
+
+</p>
+
+<p align="center">
+<!--img border="0" src="p7.png"-->
+<font size="6"><b>Choose Your Battle!</b></font>
+</p>
+<p>
+In this project scenario there is no GUI built yet because another team 
+is working on that based on the design spec.  
+When they complete their visual design they will make use of the classes 
+you have built.  
+The application architects have provided you with the
+<a href="http://www.cs.umd.edu/class/fall2016/cmsc131-05XX/Projects/P7/doc/index.html"><b>JavaDocs</b></a>
+for the classes, some initial acceptance tests (ExampleTests.java), 
+and a wider array of acceptance tests (the ones on the submit server).
+</p>
+<br>
+<p><b><u><font size="5">Phase 1</font></u></b></p>
+<p>
+</p><ul>
+<li>First, read through the Universe.java file to see what it provides
+       and keep it in mind as you work on the project.
+</li>
+<li>Next, read the documentation for the <i>Battleable</i> interface, 
+       which has been provided.
+    In this project there will be at least three classes that implement  
+        this interface; 
+               PouchCreature, BattleCow, BattleFish.
+</li>
+<li>Next, read through the BattleCow and BattleFish and PouchCreature
+        classes and the method descriptions in the documentation and
+        implement them as described.
+</li>
+<li>Finally, implement the BattleDeck class (other than the two
+        export methods export2Darray and export2Darraylist
+        and the shuffle method)
+        based on the method descriptions in the documentation.   
+    This class will support adding deep copies of Battleable objects
+        to the structure.  The structure is a double-ended list where
+        new things are added to the two ends in alternating order.
+    Additionally, the class supports two methods that the game designers
+        have requested; 
+        the ability to have the 
+        Battleable objects at the two ends of the list fight 
+        each other in a game of Solitaire (returning the winner)
+             and
+        the ability to shuffle the deck.
+</li>
+</ul>
+
+
+<br>
+<p><b><u><font size="5">Phase 2</font></u></b></p>
+<p>
+</p><ul>
+<li>Add the ability for your BattleDeck class to export the contents of 
+        the structure as a ragged two-dimensional structure; either using
+        the Java array (export2Darray) or the ArrayList (export2Darraylist).
+</li>
+<li>Add the ability to shuffle the deck the way the game designers requested.
+</li>
+<!--
+<li>Implement the BattleBoard methods.   <b>Do we have them do the moving
+and fighting part of the game?</b>
+</li>
+-->
+</ul>
+<p></p>
+<p>&nbsp;</p>
+<!--
+<p><u><b>Notes and hints:</b></u></p>
+<ul>
+<li> The weakenCreatures() method might be called apart from within the
+   fight() method.</li>
+<li> The sweepDeck() method might be called apart from within the
+   fight() method.</li>
+<li> For this project you are allowed to (and will need to) add private fields 
+   to some of the classes.</li>
+</ul>
+-->
+<br>
+<p><b><u><font size="5">Restrictions</font></u></b></p>
+<ul>
+<li>You are expected to use good style (as always), including commenting, 
+   proper indentation, proper choice of variables names, etc.
+</li>
+<li>While you are free to choose what you feel are the best internal representations
+    for your data, the signatures of the public methods may not be altered.
+</li>
+<li>Please remember that we will not be using any of the new features that
+   Java 8 introduced and that in this course you are not allowed to try to
+   use any new features that you might read about elsewhere when doing your
+   assignments.
+</li>
+</ul>
+
+<br>
+ 
+<p><b><u><font size="5">Project Submission</font></u></b></p>
+<p>
+As always, you will submit your project from Eclipse by right-clicking the 
+project folder and selecting "submit project".
+You may and should, of course, submit as you feel each part is working to 
+get feedback from our tests, and are able to submit as many times as you want 
+for public tests, and have the tokens which will regenerate 24 hours after their 
+use for release tests.  Remember, we only grade the submission that scores the 
+highest on the automated tests
+<br><br>
+<!--
+You should aim for having Phase 1 mostly done and at least lightly tested
+by the evening of Wednesday, November 20th.  Over the weekend you should 
+work to fix any bugs that remain and be able to pass public tests 1 through ?
+and release tests 1 through ?.  You should then read through the Phase 2 
+parts of the description and starter code and plan to start working on that
+by Wednesday, December 7th with the goal being to complete Phase 2 by the
+end of that weekend.
+<br><br>
+-->
+Note that you are strongly encouraged to read the project carefully and test 
+your code with your own JUnit tests first, and there will be secret tests
+that could look for errors the public and release tests might not reveal.
+</p>
+
+
+<p>&nbsp;</p>
+<p><u><font size="5"><b>Grading</b></font></u></p>
+<p>Your grade will be computed as follows:</p>
+<ul>
+<li>Public Tests:&nbsp; 73%</li>
+<li>Release Tests:&nbsp; 27%</li>
+</ul>
+<br><br><br>
+<br><br><br>
+
+
+</body></html>
